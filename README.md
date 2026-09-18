@@ -50,15 +50,19 @@ The plugin lives in Zotero's item pane, so its four actions are available beside
 
 <img src="printscreens/printscreen_02.png"
      alt="Metadata Enricher actions in the Zotero 10 item pane"
-     width="840">
+     width="500">
 
 While enrichment is running, Zotero shows which evidence paths are being checked and the elapsed time.
 
-![Metadata Enricher processing a stored PDF and scholarly sources](printscreens/printscreen_03.png)
+<img src="printscreens/printscreen_03.png"
+     alt="Metadata Enricher processing a stored PDF and scholarly sources"
+     width="500">
 
 Enrichment results open in a separate review window. It shows the current value, each proposed value, its source, status, and supporting evidence. Nothing is written until you select proposals and click **Apply selected**.
 
-![PDF and online metadata proposals in the review window](printscreens/printscreen_04.png)
+<img src="printscreens/printscreen_04.png"
+     alt="PDF and online metadata proposals in the review window"
+     width="500">
 
 After installation, **Zotero Metadata Enricher** appears and can be enabled under **Tools → Plugins**.
 
