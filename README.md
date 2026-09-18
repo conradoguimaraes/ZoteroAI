@@ -44,6 +44,29 @@ The native helper returns proposals only. It never writes `zotero.sqlite` or Zot
 
 Version **0.2.5**, build **7**, is currently a source/developer release. The helper is built locally and ad-hoc signed; it is not yet distributed as a Developer ID-signed and notarized public binary.
 
+## See it in Zotero 10
+
+The plugin lives in Zotero's item pane, so its four actions are available beside the reference you are already reviewing.
+
+![Metadata Enricher actions in the Zotero 10 item pane](printscreens/printscreen_02.png)
+
+While enrichment is running, Zotero shows which evidence paths are being checked and the elapsed time.
+
+![Metadata Enricher processing a stored PDF and scholarly sources](printscreens/printscreen_03.png)
+
+Enrichment results open in a separate review window. It shows the current value, each proposed value, its source, status, and supporting evidence. Nothing is written until you select proposals and click **Apply selected**.
+
+![PDF and online metadata proposals in the review window](printscreens/printscreen_04.png)
+
+After installation, **Zotero Metadata Enricher** appears and can be enabled under **Tools → Plugins**.
+
+<details>
+<summary>Show the installed plugin</summary>
+
+![Zotero Metadata Enricher enabled in Zotero's Plugins Manager](printscreens/printscreen_01.png)
+
+</details>
+
 ## Install in five minutes
 
 ```bash
