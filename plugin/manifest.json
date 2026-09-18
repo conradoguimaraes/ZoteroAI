@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "Zotero Metadata Enricher",
+  "version": "0.1.0",
+  "description": "Reviewable PDF-only and online metadata enrichment plus one-click BibTeX copy.",
+  "author": "Personal local project",
+  "applications": {
+    "zotero": {
+      "id": "zotero-metadata-enricher@local",
+      "strict_min_version": "8.0",
+      "strict_max_version": "9.0.*"
+    }
+  },
+  "icons": {
+    "48": "icons/zme-48.svg",
+    "96": "icons/zme-96.svg"
+  }
+}

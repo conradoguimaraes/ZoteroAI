@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Metadata Enricher</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="review.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1 id="dialog-title">Metadata review</h1>
+        <p id="item-title"></p>
+      </div>
+      <div class="header-actions">
+        <button id="select-safe">Select safe missing fields</button>
+        <button id="clear-all">Clear selection</button>
+      </div>
+    </header>
+
+    <section id="notes" class="notes" hidden="hidden"></section>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="apply-col">Apply</th>
+            <th>Field</th>
+            <th>Current</th>
+            <th>Proposed</th>
+            <th>Source</th>
+            <th>Status</th>
+            <th>Evidence</th>
+          </tr>
+        </thead>
+        <tbody id="candidate-body"></tbody>
+      </table>
+    </div>
+
+    <footer>
+      <span id="selection-count">0 selected</span>
+      <div class="footer-actions">
+        <button id="cancel">Cancel</button>
+        <button id="apply" class="primary">Apply selected</button>
+      </div>
+    </footer>
+  </main>
+  <script src="review.js"></script>
+</body>
+</html>

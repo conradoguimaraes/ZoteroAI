@@ -1,0 +1,115 @@
+:root {
+  color-scheme: light dark;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: Canvas;
+  color: CanvasText;
+}
+
+main {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 10px;
+  padding: 16px;
+}
+
+header, footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+h1 {
+  font-size: 20px;
+  margin: 0 0 4px;
+}
+
+#item-title {
+  margin: 0;
+  opacity: 0.72;
+  max-width: 760px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-actions, .footer-actions {
+  display: flex;
+  gap: 8px;
+}
+
+button {
+  font: inherit;
+  padding: 6px 12px;
+}
+
+button.primary {
+  font-weight: 600;
+}
+
+.notes {
+  border: 1px solid color-mix(in srgb, CanvasText 20%, transparent);
+  border-radius: 6px;
+  padding: 8px 10px;
+  white-space: pre-wrap;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.table-wrap {
+  min-height: 0;
+  overflow: auto;
+  border: 1px solid color-mix(in srgb, CanvasText 20%, transparent);
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+th, td {
+  border-bottom: 1px solid color-mix(in srgb, CanvasText 14%, transparent);
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background: Canvas;
+  z-index: 1;
+  font-weight: 600;
+}
+
+.apply-col { width: 54px; }
+th:nth-child(2) { width: 120px; }
+th:nth-child(3) { width: 180px; }
+th:nth-child(4) { width: 260px; }
+th:nth-child(5) { width: 150px; }
+th:nth-child(6) { width: 110px; }
+
+.current-nonempty {
+  font-weight: 600;
+}
+
+.status {
+  display: inline-block;
+  border: 1px solid color-mix(in srgb, CanvasText 30%, transparent);
+  border-radius: 999px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+.muted { opacity: 0.62; }
