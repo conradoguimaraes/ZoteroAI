@@ -48,7 +48,9 @@ Version **0.2.5**, build **7**, is currently a source/developer release. The hel
 
 The plugin lives in Zotero's item pane, so its four actions are available beside the reference you are already reviewing.
 
-![Metadata Enricher actions in the Zotero 10 item pane](printscreens/printscreen_02.png)
+<img src="printscreens/printscreen_02.png"
+     alt="Metadata Enricher actions in the Zotero 10 item pane"
+     width="840">
 
 While enrichment is running, Zotero shows which evidence paths are being checked and the elapsed time.
 
