@@ -1,7 +1,7 @@
 "use strict";
 
 var ZME = (() => {
-  const PLUGIN_ID = "zotero-metadata-enricher@local.invalid";
+  const PLUGIN_ID = "zotero-metadata-enricher@conradoguimaraes.github.io";
   const HELPER_BASE = "http://127.0.0.1:43119";
   const TOKEN_RELATIVE_PATH = "/Library/Application Support/Zotero Metadata Enricher/token";
   const REQUEST_TIMEOUT_MS = 120000;

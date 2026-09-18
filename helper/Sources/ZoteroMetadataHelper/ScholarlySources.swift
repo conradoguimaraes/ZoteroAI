@@ -266,7 +266,7 @@ struct ScholarlySources {
 
     private func fetchJSON(url: URL) async -> [String: Any]? {
         var request = URLRequest(url: url)
-        request.setValue("ZoteroMetadataEnricher/0.1 (personal local app)", forHTTPHeaderField: "User-Agent")
+        request.setValue("ZoteroMetadataEnricher/0.2.5 (+https://github.com/conradoguimaraes/ZoteroAI)", forHTTPHeaderField: "User-Agent")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
         do {

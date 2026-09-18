@@ -1,5 +1,0 @@
----
-triple:          'arm64-apple-darwin'
-binary-path:     '/Users/conrado/Documents/Github/ZoteroAI/helper/.build/out/Products/Release/ZoteroMetadataHelper'
-relocations:     []
-...

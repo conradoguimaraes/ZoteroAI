@@ -3,18 +3,18 @@
   "name": "Zotero Metadata Enricher",
   "version": "0.2.5",
   "description": "Reviewable PDF, online, and combined metadata enrichment plus one-click BibTeX copy.",
-  "author": "Personal local project",
+  "author": "Zotero Metadata Enricher contributors",
   "applications": {
     "zotero": {
-      "id": "zotero-metadata-enricher@local.invalid",
+      "id": "zotero-metadata-enricher@conradoguimaraes.github.io",
       "strict_min_version": "10.0",
       "strict_max_version": "10.0.*",
-      "update_url": "https://example.com/zotero-metadata-enricher/updates.json"
+      "update_url": "https://github.com/conradoguimaraes/ZoteroAI/releases/latest/download/updates.json"
     }
   },
   "icons": {
     "48": "icons/zme-48.svg",
     "96": "icons/zme-96.svg"
   },
-  "homepage_url": "https://example.com/zotero-metadata-enricher"
+  "homepage_url": "https://github.com/conradoguimaraes/ZoteroAI"
 }
