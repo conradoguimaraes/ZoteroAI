@@ -121,3 +121,57 @@ func isMeaningfullyDifferent(field: String, candidateValue: String, item: ItemSn
     if current.isEmpty { return !candidateValue.zmeTrimmed.isEmpty }
     return current.zmeNormalized != candidateValue.zmeNormalized
 }
+
+private let lowInformationMetadataValues: Set<String> = [
+    "-", "—", "n a", "na", "none", "null", "undefined", "unknown",
+    "not available", "not applicable", "unavailable", "unspecified",
+    "unpublished", "not published", "untitled"
+]
+
+func isUsefulMetadataValue(field: String, value: String) -> Bool {
+    let trimmed = value.zmeCollapsedWhitespace
+    guard !trimmed.isEmpty else { return false }
+
+    let normalized = trimmed.zmeNormalized
+    guard !normalized.isEmpty, !lowInformationMetadataValues.contains(normalized) else {
+        return false
+    }
+
+    // Field-specific placeholders that are especially harmful when written as
+    // bibliographic facts. A source may legitimately use these internally, but
+    // they do not enrich a Zotero record.
+    if field == "publisher" && ["unpublished", "not published"].contains(normalized) {
+        return false
+    }
+
+    return true
+}
+
+func dateComponents(_ raw: String) -> [String] {
+    raw.split(whereSeparator: { !$0.isNumber }).map(String.init)
+}
+
+func candidateReducesExistingSpecificity(field: String, candidateValue: String, item: ItemSnapshot) -> Bool {
+    let current = existingValue(for: field, in: item).zmeCollapsedWhitespace
+    guard !current.isEmpty else { return false }
+
+    if field == "date" {
+        let currentParts = dateComponents(current)
+        let candidateParts = dateComponents(candidateValue)
+        if let currentYear = currentParts.first,
+           let candidateYear = candidateParts.first,
+           currentYear == candidateYear,
+           candidateParts.count < currentParts.count {
+            return true
+        }
+    }
+
+    return false
+}
+
+func shouldProposeCandidate(field: String, candidateValue: String, item: ItemSnapshot) -> Bool {
+    guard isUsefulMetadataValue(field: field, value: candidateValue) else { return false }
+    guard isMeaningfullyDifferent(field: field, candidateValue: candidateValue, item: item) else { return false }
+    guard !candidateReducesExistingSpecificity(field: field, candidateValue: candidateValue, item: item) else { return false }
+    return true
+}

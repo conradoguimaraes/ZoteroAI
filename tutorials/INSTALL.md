@@ -1,93 +1,77 @@
-# Installation — Zotero 9.0.x on macOS
+# Installation — Zotero 10.0.x on macOS
 
-This guide assumes you have downloaded/unzipped this repository onto the Mac where Zotero is installed.
+Use this release only after upgrading Zotero to 10.0.x.
 
 ## 1. Open Terminal in the repository
 
-If the folder is in Downloads, for example:
+For your current folder:
 
 ```bash
-cd ~/Downloads/zotero-metadata-enricher
+cd ~/Documents/Github/ZoteroAI
 ```
 
-If it is elsewhere, type `cd ` (including the trailing space), drag the repository folder into Terminal, and press Return.
-
-## 2. Make the scripts executable
+## 2. Make scripts executable
 
 ```bash
 chmod +x scripts/*.sh
 ```
 
-You normally need to do this only once.
-
-## 3. Build and install the native helper
+## 3. Build and install the helper
 
 ```bash
 ./scripts/install-helper.sh
 ```
 
-The script:
+The installer now:
 
-1. builds the Swift helper with your installed Apple toolchain;
-2. creates `dist/Zotero Metadata Helper.app`;
-3. copies it to `~/Applications/Zotero Metadata Helper.app`;
-4. starts it.
+1. builds the Swift helper;
+2. stops an older helper process if one exists;
+3. installs the app at `~/Applications/Zotero Metadata Helper.app`;
+4. starts it;
+5. waits for `http://127.0.0.1:43119/health` before reporting success.
 
-You should see a small **ZME** item in the macOS menu bar.
+A successful run ends with a JSON health response showing version `0.2.5` and build `7`.
 
-If Terminal reports that `swift` is unavailable, open/install Xcode (or the Xcode Command Line Tools) and repeat the command.
-
-## 4. Optional: start the helper automatically when you log in
-
-Once the helper works normally, run:
+If this step fails, run:
 
 ```bash
-./scripts/install-launch-agent.sh
+./scripts/diagnose-helper.sh
 ```
 
-This creates a user LaunchAgent. It does not require administrator privileges.
+and keep the output.
 
-## 5. Build the Zotero plugin
+## 4. Build the Zotero plugin
 
 ```bash
 ./scripts/build-plugin.sh
 ```
 
-The resulting file is:
+This creates:
 
 ```text
-dist/zotero-metadata-enricher-0.1.0.xpi
+dist/zotero-metadata-enricher-0.2.5.xpi
 ```
 
-## 6. Install the plugin in Zotero
+## 5. Install the plugin
 
-1. Open Zotero.
-2. Choose **Tools → Plugins**.
-3. Drag `dist/zotero-metadata-enricher-0.1.0.xpi` into the Plugins window.
-4. Confirm installation if Zotero asks.
-5. Restart Zotero if the new controls do not appear immediately.
+In Zotero:
 
-Zotero's official plugin documentation supports installing an `.xpi` by dragging it into **Tools → Plugins**.
+1. **Tools → Plugins**
+2. remove/disable the old an older `Zotero Metadata Enricher` version if it is still installed;
+3. drag `dist/zotero-metadata-enricher-0.2.5.xpi` into the Plugins window;
+4. confirm installation;
+5. restart Zotero if requested.
 
-## 7. Verify the helper before changing metadata
-
-In Terminal:
+## 6. Verify the helper manually
 
 ```bash
-curl -s http://127.0.0.1:43119/health | python3 -m json.tool
+curl -s http://127.0.0.1:43119/health
 ```
 
-Expected shape:
+Expected fields include:
 
 ```json
-{
-  "appleIntelligenceAvailable": true,
-  "build": 1,
-  "service": "Zotero Metadata Helper",
-  "version": "0.1.0"
-}
+{"service":"Zotero Metadata Helper","version":"0.2.5","build":7}
 ```
 
-`appleIntelligenceAvailable` can legitimately be `false` if Apple Intelligence is disabled/not ready/not supported. Online enrichment does not depend on the on-device model.
-
-Continue with [FIRST_RUN.md](FIRST_RUN.md).
+Then follow [FIRST_RUN.md](FIRST_RUN.md).

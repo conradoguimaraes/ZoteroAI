@@ -6,6 +6,12 @@ Do nothing first. Inspect the metadata Zotero/Connector already downloaded. This
 
 If it is complete and correct, stop. There is no benefit in running AI or network requests merely because they are available.
 
+## Recommended — PDF + online together
+
+Use **Enrich from PDF + online…** when the item has a stored PDF and you want the richest review in one pass. The PDF is analyzed locally, structured scholarly sources are queried online, and matching values are marked **Corroborated**. If the sources disagree, both alternatives are shown and you can select at most one value for that Zotero field.
+
+Low-information placeholders such as `Unpublished` are discarded and less-specific dates are not offered over a more precise existing date for the same year.
+
 ## Stage 2 — Stored PDF only
 
 Use **Enrich from stored PDF…** when metadata is incomplete and the attached PDF likely contains the missing information.

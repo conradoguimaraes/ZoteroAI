@@ -28,7 +28,7 @@ enum PDFTextExtractor {
             throw NSError(
                 domain: "ZME.PDF",
                 code: 2,
-                userInfo: [NSLocalizedDescriptionKey: "The PDF contains too little extractable text. Scanned-image OCR is not implemented in version 0.1.0."]
+                userInfo: [NSLocalizedDescriptionKey: "The PDF contains too little extractable text. Scanned-image OCR is not implemented yet."]
             )
         }
 

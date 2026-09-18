@@ -56,7 +56,7 @@ enum OnlineEnricher {
             }
             guard let winner = sorted.first, let first = winner.1.first else { continue }
             let value = first.value
-            guard isMeaningfullyDifferent(field: field, candidateValue: value, item: item) else { continue }
+            guard shouldProposeCandidate(field: field, candidateValue: value, item: item) else { continue }
 
             let sources = Array(Set(winner.1.map { $0.source.source })).sorted()
             let exactIdentifier = winner.1.contains { $0.source.identifierMatch }

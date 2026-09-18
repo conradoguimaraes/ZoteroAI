@@ -16,7 +16,13 @@ final class LocalHTTPServer {
         let parameters = NWParameters.tcp
         parameters.allowLocalEndpointReuse = true
         parameters.requiredLocalEndpoint = .hostPort(host: "127.0.0.1", port: port)
-        let listener = try NWListener(using: parameters, on: port)
+
+        // Do not also pass `on: port` here. Network.framework treats an
+        // explicit listener port together with a `requiredLocalEndpoint`
+        // containing its own port as incompatible and NWListener throws
+        // POSIX EINVAL (NWError error 22). The required endpoint already
+        // pins this listener to 127.0.0.1:43119.
+        let listener = try NWListener(using: parameters)
         self.listener = listener
 
         listener.newConnectionHandler = { [weak self] connection in
@@ -104,28 +110,9 @@ final class LocalHTTPServer {
 
         switch request.path {
         case "/v1/pdf-enrich":
-            guard let pdfPath = payload.pdfPath, !pdfPath.isEmpty else {
-                return .json(status: 400, object: ErrorResponse(error: "A PDF path is required for PDF-only enrichment."))
-            }
             do {
-                let extraction = try PDFTextExtractor.extract(from: pdfPath)
-                var candidates = extraction.deterministicCandidates.filter {
-                    isMeaningfullyDifferent(field: $0.field, candidateValue: $0.value, item: payload.item)
-                }
-                var notes = ["PDF text extracted from \(extraction.pageCount) page(s). No network lookup was performed in this stage."]
-
-                do {
-                    let ai = try await AppleIntelligenceAnalyzer.analyzePDF(excerpt: extraction.excerpt, item: payload.item)
-                    candidates.append(contentsOf: ai)
-                } catch {
-                    notes.append("Apple Intelligence analysis was unavailable or failed: \(error.localizedDescription)")
-                }
-
-                candidates = deduplicateCandidates(candidates)
-                return .json(
-                    status: 200,
-                    object: EnrichmentResponse(requestID: payload.requestID, candidates: candidates, notes: notes)
-                )
+                let response = try await pdfEnrichment(payload: payload, offlineOnly: true)
+                return .json(status: 200, object: response)
             } catch {
                 return .json(status: 422, object: ErrorResponse(error: error.localizedDescription))
             }
@@ -135,9 +122,78 @@ final class LocalHTTPServer {
             response.requestID = payload.requestID
             return .json(status: 200, object: response)
 
+        case "/v1/combined-enrich":
+            do {
+                let pdfResponse = try await pdfEnrichment(payload: payload, offlineOnly: false)
+                var onlineResponse = await OnlineEnricher.enrich(item: payload.item)
+                onlineResponse.requestID = payload.requestID
+
+                let candidates = CandidateCombiner.combine(
+                    pdf: pdfResponse.candidates,
+                    online: onlineResponse.candidates,
+                    item: payload.item
+                )
+                let notes = [
+                    "Combined enrichment used the stored PDF and structured online scholarly sources.",
+                    "When the PDF and an online source agree on the same value, that value is marked as corroborated.",
+                    "Conflicting alternatives remain separate proposals and are never applied automatically."
+                ] + pdfResponse.notes + onlineResponse.notes
+
+                return .json(
+                    status: 200,
+                    object: EnrichmentResponse(requestID: payload.requestID, candidates: candidates, notes: notes)
+                )
+            } catch {
+                return .json(status: 422, object: ErrorResponse(error: error.localizedDescription))
+            }
+
         default:
             return .json(status: 404, object: ErrorResponse(error: "Unknown helper endpoint."))
         }
+    }
+
+    private func pdfEnrichment(payload: EnrichmentRequest, offlineOnly: Bool) async throws -> EnrichmentResponse {
+        guard let pdfPath = payload.pdfPath, !pdfPath.isEmpty else {
+            throw NSError(
+                domain: "ZME.PDF",
+                code: 10,
+                userInfo: [NSLocalizedDescriptionKey: "A stored PDF path is required for PDF-based enrichment."]
+            )
+        }
+
+        guard FileManager.default.fileExists(atPath: pdfPath) else {
+            throw NSError(
+                domain: "ZME.PDF",
+                code: 11,
+                userInfo: [NSLocalizedDescriptionKey: "The stored PDF file no longer exists at the path provided by Zotero."]
+            )
+        }
+        guard FileManager.default.isReadableFile(atPath: pdfPath) else {
+            throw NSError(
+                domain: "ZME.PDF",
+                code: 12,
+                userInfo: [NSLocalizedDescriptionKey: "The stored PDF exists, but the Metadata Helper cannot read it. Check macOS file permissions for Zotero Metadata Helper."]
+            )
+        }
+
+        let extraction = try PDFTextExtractor.extract(from: pdfPath)
+        var candidates = extraction.deterministicCandidates.filter {
+            shouldProposeCandidate(field: $0.field, candidateValue: $0.value, item: payload.item)
+        }
+        var notes = ["PDF text extracted from \(extraction.pageCount) page(s)."]
+        if offlineOnly {
+            notes.append("No network lookup was performed in this stage.")
+        }
+
+        do {
+            let ai = try await AppleIntelligenceAnalyzer.analyzePDF(excerpt: extraction.excerpt, item: payload.item)
+            candidates.append(contentsOf: ai)
+        } catch {
+            notes.append("Apple Intelligence analysis was unavailable or failed: \(error.localizedDescription)")
+        }
+
+        candidates = deduplicateCandidates(candidates)
+        return EnrichmentResponse(requestID: payload.requestID, candidates: candidates, notes: notes)
     }
 
     private func send(_ response: HTTPResponse, over connection: NWConnection) {

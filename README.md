@@ -1,110 +1,106 @@
 # Zotero Metadata Enricher
 
-Personal-use Zotero extension for macOS that adds three workflows directly to Zotero:
+Personal-use Zotero extension for macOS with four workflows:
 
-1. **Keep the metadata Zotero already imported.** This is the baseline and remains untouched unless you explicitly approve a replacement.
-2. **Enrich from the stored PDF only.** The helper extracts PDF text locally and asks Apple's on-device Foundation Model for candidate metadata. No scholarly web lookup is performed in this stage.
-3. **Enrich from online scholarly sources.** The helper queries Crossref, DataCite, and OpenAlex, reconciles the returned records, and presents candidate values for review.
+1. keep the metadata Zotero already imported;
+2. enrich from the stored PDF only using PDFKit + Apple Foundation Models;
+3. enrich from structured online scholarly sources and review every proposed field before writing it;
+4. run **PDF + online** together and reconcile/corroborate the results in one review.
 
-It also adds **Copy BibTeX**, which uses Zotero's own BibTeX export translator and places the result directly on the macOS clipboard.
+It also adds one-click **Copy BibTeX** using Zotero's own BibTeX translator.
 
 ## Current release
 
-- Version: **0.1.0**
-- Build: **1**
-- Target Zotero: **9.0.x** (the user's current 9.0.6 is within this compatibility target; runtime validation on that installation is still required)
+- Version: **0.2.5**
+- Build: **7**
+- Target Zotero: **10.0.x**
 - Target macOS: **macOS 26+ with Apple Intelligence support**
-- Distribution model: personal/local use
+- Distribution: personal/local use
 
-See [CHANGELOG.md](CHANGELOG.md) for release history.
+## Architecture
 
-## Why this is a plugin + native helper
-
-This repository deliberately does **not** fork Zotero.
+The project intentionally remains a small Zotero plugin plus a native macOS helper:
 
 ```text
-Zotero 9
+Zotero 10
   |
-  | small plugin
-  | - UI inside Zotero
-  | - reads selected items/collections
-  | - writes only user-approved changes
-  | - uses Zotero's BibTeX translator
+  | plugin
+  | - buttons/context menus
+  | - selected item/collection
+  | - review UI
+  | - approved Zotero writes
+  | - Zotero-native BibTeX export
   v
-localhost authenticated request
+127.0.0.1:43119 + private token
   |
   v
-Zotero Metadata Helper (native macOS)
-  |-- PDFKit -> stored PDF text
-  |-- Apple FoundationModels -> PDF-only extraction
-  `-- HTTPS -> Crossref / DataCite / OpenAlex
+Zotero Metadata Helper
+  |-- PDFKit
+  |-- Apple FoundationModels
+  `-- Crossref / DataCite / OpenAlex
 ```
 
-This split is intentional. Zotero 9's Local API is useful for reads, but local **write** requests are a Zotero 10+ feature. For Zotero 9, the plugin is therefore the supported place to perform local item updates through Zotero's JavaScript API. The native helper never edits `zotero.sqlite`, never guesses Zotero's storage layout, and never writes bibliographic items itself.
+The helper never edits `zotero.sqlite` and never guesses Zotero's storage layout.
+
+
+## v0.2.5 filtering, combined enrichment, and error handling
+
+v0.2.5 focuses on the first real enrichment results and PDF error report:
+
+- low-information placeholders such as **Unpublished**, **Unknown**, `N/A`, and similar values are discarded before they reach the review window;
+- a less-specific date such as `2020` is no longer proposed over an existing `2020-08-31`;
+- a new **Enrich from PDF + online** action runs both evidence paths and marks exact cross-source agreement as **Corroborated**;
+- conflicting PDF/online alternatives remain separate and the review UI enforces at most one accepted value per Zotero field;
+- helper HTTP errors are no longer all misreported as “helper could not be reached”; PDF/open/permission errors are surfaced directly;
+- if the helper is actually stopped, the plugin attempts to launch `~/Applications/Zotero Metadata Helper.app` and retries;
+- PDF/combined operations use a longer timeout and show elapsed time while Apple Intelligence is working;
+- item-pane controls use normal Zotero buttons with descriptions outside the button, avoiding text overlap/clipping.
+
+## v0.2.4 UI/runtime hardening
+
+v0.2.4 fixes the first real Zotero 10 runtime issues found during testing:
+
+- the metadata review window is now loaded from a runtime-registered `chrome://` package instead of a raw XPI `jar:file` URL;
+- review windows use a readiness handshake and fail with a useful error instead of remaining blank indefinitely;
+- PDF and online enrichment now show visible progress while the helper is working;
+- Copy BibTeX uses Zotero's built-in BibTeX translator UUID directly, avoiding the asynchronous `getTranslators()` misuse that caused `translators.find is not a function`;
+- success notifications are non-blocking;
+- in-place plugin upgrades proactively remove stale menu/item-pane registrations before re-registering them;
+- the item-pane controls now explain exactly what each action does.
+
+## v0.2.0 startup fix
+
+v0.1.0 could fail immediately with:
+
+```text
+Network.NWError error 22 - Invalid argument
+```
+
+The cause was an invalid Network.framework listener configuration: the same listener port was specified both in `requiredLocalEndpoint` and in `NWListener(using:on:)`. v0.2.0 uses the loopback `requiredLocalEndpoint` as the single address/port definition.
 
 ## Safety model
 
-The project treats Zotero as the source of truth.
-
-- Existing metadata is shown as **Current**.
+- Existing values are shown as **Current**.
 - New values are shown as **Proposed**.
-- Every proposal includes **Source**, **Status**, and evidence where available.
-- Existing non-empty fields are never pre-selected for replacement.
-- AI-derived PDF fields are never pre-selected automatically.
-- Missing fields backed by a deterministic PDF extraction or a strong online match can be pre-selected, but the user still sees the review screen before anything is saved.
-- Accepting a proposed author list preserves existing non-author creator roles such as editors or translators.
-- Tags are merged rather than silently replacing existing tags.
+- Every proposal has a source/status/evidence where available.
+- Existing non-empty fields are not pre-selected for replacement.
+- AI-from-PDF fields are not automatically treated as verified.
+- Metadata is written only after user approval.
+- Tags are merged rather than silently replaced.
+- Existing non-author creator roles are preserved when accepting a proposed author list.
 
-Candidate statuses are:
+## Install
 
-- `Verified` — exact identifier-backed online record.
-- `Corroborated` — at least two online sources agree on the normalized value.
-- `PDF extracted` — deterministic extraction from the local PDF, currently DOI pattern matching.
-- `AI from PDF` — Apple Intelligence interpretation grounded only in the stored PDF text.
-- `Online` — a sufficiently strong title-matched online record that is not independently corroborated.
-
-## What appears in Zotero
-
-For a selected bibliographic item, the plugin adds a **Metadata Enricher** section to the right item pane and item context-menu actions:
-
-- **Enrich from stored PDF…**
-- **Enrich from online sources…**
-- **Copy BibTeX**
-
-For a selected collection, its context menu adds:
-
-- **Enrich collection from stored PDFs…**
-- **Enrich collection from online sources…**
-
-Version 0.1.0 intentionally reviews collection items one at a time. That is slower than a blind batch write but substantially safer for a first release. A consolidated batch-review screen is a planned improvement.
-
-## Important Siri / Apple Intelligence limitation
-
-The app does **not** automate the macOS “Ask Siri” interface. Apple exposes the on-device model through `FoundationModels`, but does not expose a public API equivalent to “give this PDF to Siri and return Siri's web-enabled answer”.
-
-Therefore:
-
-- PDF-only enrichment uses `SystemLanguageModel.default` directly.
-- Online bibliographic enrichment uses explicit scholarly APIs.
-- The PDF itself is **not sent to Crossref, DataCite, or OpenAlex**. Stage 3 sends bibliographic identifiers/title needed for lookups.
-- Generic Siri web search is not claimed or simulated.
-
-This design is more auditable for reference metadata than allowing a language model to invent bibliographic facts from unrestricted web results.
-
-## Quick installation
-
-Start with [tutorials/INSTALL.md](tutorials/INSTALL.md). The short version is:
+Read [tutorials/INSTALL.md](tutorials/INSTALL.md). In short:
 
 ```bash
-cd /path/to/zotero-metadata-enricher
+cd /path/to/ZoteroAI
 chmod +x scripts/*.sh
 ./scripts/install-helper.sh
 ./scripts/build-plugin.sh
 ```
 
-Then open Zotero → **Tools → Plugins** and drag `dist/zotero-metadata-enricher-0.1.0.xpi` into the Plugins window.
-
-After both pieces are installed, follow [tutorials/FIRST_RUN.md](tutorials/FIRST_RUN.md).
+Then install `dist/zotero-metadata-enricher-0.2.5.xpi` from Zotero **Tools → Plugins**.
 
 ## Repository layout
 
@@ -113,11 +109,11 @@ After both pieces are installed, follow [tutorials/FIRST_RUN.md](tutorials/FIRST
 ├── VERSION
 ├── BUILD
 ├── CHANGELOG.md
-├── plugin/                     Zotero 9 plugin
-├── helper/                     native Swift helper
-├── scripts/                    build/install/verification scripts
-├── tutorials/                  user and developer how-to guides
-└── .github/workflows/          CI verification
+├── plugin/
+├── helper/
+├── scripts/
+├── tutorials/
+└── .github/workflows/
 ```
 
 ## Verification
@@ -128,25 +124,26 @@ Run:
 ./scripts/verify.sh
 ```
 
-It checks JavaScript syntax, manifest/version consistency, Swift package/tests, builds the plugin XPI, and validates the XPI. On macOS it additionally builds the native helper against the installed Apple SDK.
+On macOS this builds the native helper against the installed Apple SDK. Runtime Zotero integration still needs to be exercised on the actual Mac/Zotero installation.
 
-A successful source build is **not** proof that the Zotero runtime integration works on your exact Zotero/macOS installation. The first-run procedure includes runtime checks, and issues should be reported with the diagnostics requested in [tutorials/TROUBLESHOOTING.md](tutorials/TROUBLESHOOTING.md).
+## Documentation
 
-## Development and releases
-
-- [tutorials/DEVELOPMENT.md](tutorials/DEVELOPMENT.md)
-- [tutorials/RELEASES.md](tutorials/RELEASES.md)
-- [tutorials/ARCHITECTURE.md](tutorials/ARCHITECTURE.md)
-- [tutorials/GITHUB.md](tutorials/GITHUB.md)
+- [Installation](tutorials/INSTALL.md)
+- [First run](tutorials/FIRST_RUN.md)
+- [Enrich one reference](tutorials/HOW_TO_ENRICH_ONE_REFERENCE.md)
+- [Enrich a collection](tutorials/HOW_TO_ENRICH_COLLECTION.md)
+- [Copy BibTeX](tutorials/HOW_TO_COPY_BIBTEX.md)
+- [Troubleshooting](tutorials/TROUBLESHOOTING.md)
+- [Architecture](tutorials/ARCHITECTURE.md)
+- [Development](tutorials/DEVELOPMENT.md)
+- [Releases](tutorials/RELEASES.md)
 
 ## Privacy
 
-Stage 2 is designed to be local: PDF text is processed using PDFKit and Apple's on-device `SystemLanguageModel`.
+PDF-only enrichment is designed to remain local: PDF text is extracted locally and processed with Apple's on-device Foundation Model.
 
-Stage 3 makes normal HTTPS requests to Crossref, DataCite, and OpenAlex. It does not upload the PDF. Review the privacy policies and terms of those services if that matters for a particular library.
+Online enrichment sends bibliographic identifiers/title information to Crossref, DataCite, and OpenAlex. The PDF itself is not uploaded to those services.
 
 ## License and affiliation
 
-Original code in this repository is provided under the MIT License. See [LICENSE](LICENSE).
-
-This is a private, unofficial project. It is not affiliated with, endorsed by, or distributed by Zotero or Digital Scholar. “Zotero” is used only to describe compatibility with the Zotero application.
+Original code in this repository is provided under the MIT License. This is an unofficial personal project and is not affiliated with or endorsed by Zotero or Digital Scholar.

@@ -1,96 +1,62 @@
 # Architecture
 
-## Design decision
+## Current design
 
-Use a **minimal Zotero plugin** for integration and writes, plus a **native macOS helper** for Apple Intelligence/PDF/network work.
+Use a **minimal Zotero 10 plugin** for Zotero UI/review/writes and a **native macOS helper** for PDFKit, Apple Foundation Models, and scholarly network lookups.
 
-A Zotero fork was rejected because it would create a large upstream maintenance burden for three small UI actions. An external app alone was rejected for Zotero 9 because the Local API supports local writes only in Zotero 10+ and because the desired controls belong inside the Zotero workflow.
+A full Zotero fork remains unjustified for these small user-facing actions.
+
+Zotero 10 now exposes authenticated Local API writes, which is a viable future boundary for moving more write logic out of the plugin. v0.2.0 deliberately does not perform that larger refactor while fixing the concrete helper startup bug; retaining the already-developed review/write path minimizes regression surface.
 
 ## Data flow
 
 ```text
-Stage 1: baseline
-Zotero Connector/import -> Zotero item + stored PDF
-                              |
-                              v
-Stage 2: PDF only       plugin snapshots current item
-                              |
-                              +-> stored PDF path
-                              |
-                              v
-                         native helper
-                         PDFKit + FoundationModels
-                              |
-                         candidate fields
-                              |
-                              v
-                         review dialog
-                              |
-                         approved only
-                              |
-                              v
-                         Zotero JS API write
-
-Stage 3: online         plugin snapshots current item
-                              |
-                              v
-                         native helper
-                    DOI/title -> Crossref/DataCite/OpenAlex
-                              |
-                         reconcile/provenance
-                              |
-                              v
-                         review dialog
-                              |
-                         approved only
-                              |
-                              v
-                         Zotero JS API write
+Stage 1: existing Zotero metadata + stored PDF
+                     |
+          +----------+----------+
+          |                     |
+          v                     v
+Stage 2: PDF only        Stage 3: online
+PDFKit + Apple AI        Crossref/DataCite/OpenAlex
+          |                     |
+          +----------+----------+
+                     v
+        Stage 4: combined reconciliation
+        - exact agreement => corroborated
+        - conflicts => separate alternatives
+                     |
+                     v
+                 review UI
+                     |
+               approved only
+                     |
+                     v
+              Zotero item write
 ```
+
+## Helper IPC
+
+The helper listens on `127.0.0.1:43119`. Enrichment requests require a random private token stored at:
+
+```text
+~/Library/Application Support/Zotero Metadata Enricher/token
+```
+
+The listener is configured with one loopback `requiredLocalEndpoint`. Do not additionally pass the same explicit port to `NWListener(using:on:)`; Network.framework rejects that combination with `EINVAL`.
 
 ## Trust boundaries
 
-### Zotero plugin
+The plugin determines selections, reads Zotero metadata/attachments through Zotero APIs, displays the review UI, applies explicit approvals, and uses Zotero's own BibTeX translator.
 
-Trusted with the user's Zotero library because Zotero plugins run with powerful application privileges. Responsibilities are intentionally narrow:
-
-- determine selected item/collection;
-- obtain attachment path through Zotero's API;
-- snapshot metadata;
-- show review UI;
-- apply explicitly selected candidates;
-- export BibTeX using Zotero's translator framework.
-
-### Native helper
-
-Does not modify Zotero. It accepts an item snapshot and, for PDF mode, a local PDF path. It returns proposals only.
-
-The helper listens on `127.0.0.1:43119` and enrichment requests require a random token stored with user-only file permissions.
-
-### External services
-
-Online mode currently makes HTTPS requests to:
-
-- Crossref;
-- DataCite;
-- OpenAlex.
-
-The PDF file/body is not uploaded to these services. Queries use DOI/title-derived bibliographic information.
-
-## Matching/reconciliation
-
-Exact DOI lookup is preferred. Without a DOI, providers are searched by title. A title result below normalized Jaccard similarity `0.72` is discarded. Because an existing DOI can itself be wrong, a DOI-resolved record is rejected when the Zotero item already has a title and the resolved record is clearly inconsistent with it (similarity below `0.55`); that provider then falls back to a title search instead of trusting the questionable DOI. These are deliberately conservative matching heuristics, not probabilities.
-
-Values are normalized before cross-source comparison. If two or more independent providers return the same normalized value, that proposal is marked `Corroborated`. An exact identifier-backed single-source value that passes the DOI/title sanity check is marked `Verified`. A title-only single-source value remains `Online` and is not treated as independently verified. Creator names are proposed only when a provider supplies structured given/family-name components; the helper does not split a single display name heuristically.
-
-These labels describe the **lookup evidence**, not absolute truth. The review screen remains authoritative for writes.
-
-## PDF model path
-
-The PDF extractor intentionally limits the model excerpt because Apple's on-device model has a finite context window. Bibliographic metadata is normally concentrated on the first pages. The helper currently takes an excerpt from the front of the paper and, if room remains, the final pages.
-
-The Foundation Model instruction explicitly tells the model to use only supplied PDF text and to omit uncertain values. AI candidates are still marked `AI from PDF`, not `Verified`.
+The helper returns metadata proposals only. It never writes Zotero's SQLite database or attachment storage directly.
 
 ## Replaceability
 
-Provider logic lives in `ScholarlySources.swift`; model logic lives in `AppleIntelligenceAnalyzer.swift`; Zotero integration lives in the plugin. A future model or metadata provider can therefore be replaced without redesigning Zotero writes.
+- `ScholarlySources.swift`: structured online providers
+- `AppleIntelligenceAnalyzer.swift`: Apple model extraction
+- `PDFTextExtractor.swift`: local PDF extraction
+- plugin code: Zotero integration/review/write layer
+
+## Failure handling
+
+The plugin distinguishes helper connectivity failures from application-level errors. HTTP error responses from the helper are decoded and shown to the user. If the helper is genuinely stopped, the plugin attempts to launch the installed app and retries. PDF/combined requests use a longer timeout than online-only lookups because Apple Intelligence may take substantially longer than scholarly API requests.

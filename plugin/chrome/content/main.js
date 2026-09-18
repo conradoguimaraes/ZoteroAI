@@ -1,10 +1,12 @@
 "use strict";
 
 var ZME = (() => {
-  const PLUGIN_ID = "zotero-metadata-enricher@local";
+  const PLUGIN_ID = "zotero-metadata-enricher@local.invalid";
   const HELPER_BASE = "http://127.0.0.1:43119";
   const TOKEN_RELATIVE_PATH = "/Library/Application Support/Zotero Metadata Enricher/token";
   const REQUEST_TIMEOUT_MS = 120000;
+  const BIBTEX_TRANSLATOR_ID = "9cb70025-a888-4a29-a210-93ec52da40d4";
+  const REVIEW_DIALOG_URL = "chrome://zotero-metadata-enricher/content/review.xhtml";
 
   const state = {
     rootURI: null,
@@ -27,6 +29,7 @@ var ZME = (() => {
       win.MozXULElement?.insertFTLIfNeeded("zotero-metadata-enricher.ftl");
     }
 
+    cleanupStaleRegistrations();
     registerMenus();
     registerItemPaneSection();
 
@@ -62,39 +65,100 @@ var ZME = (() => {
     }
   }
 
+  function cleanupStaleRegistrations() {
+    // During in-place plugin upgrades Zotero can briefly retain DOM registrations
+    // from the previous version. Remove our stable, namespaced IDs before
+    // registering again so an upgrade never leaves duplicate menus or sections.
+    const menuIDs = [
+      `${PLUGIN_ID}-zme-item-menu`,
+      `${PLUGIN_ID}-zme-collection-menu`,
+    ];
+    for (const menuID of menuIDs) {
+      try {
+        Zotero.MenuManager.unregisterMenu(menuID);
+      } catch (_) {
+        // Not registered is the normal cold-start case.
+      }
+    }
+
+    try {
+      Zotero.ItemPaneManager.unregisterSection(`${PLUGIN_ID}-zme-item-pane`);
+    } catch (_) {
+      // Not registered is the normal cold-start case.
+    }
+  }
+
   function registerMenus() {
+    const itemVisible = (_event, context) => {
+      const items = Array.isArray(context?.items) ? context.items : [];
+      context.setVisible(items.length === 1 && items[0]?.isRegularItem());
+    };
+
+    const itemFromContext = (context) => {
+      const items = Array.isArray(context?.items) ? context.items : [];
+      return items.length === 1 && items[0]?.isRegularItem() ? items[0] : null;
+    };
+
+    // Keep the item context menu deliberately flat. Nested MenuManager submenus
+    // add no value for a small action set and have proven fragile across Zotero UI
+    // revisions. Direct commands are also one click faster for the user.
     const itemMenuID = Zotero.MenuManager.registerMenu({
       menuID: "zme-item-menu",
       pluginID: PLUGIN_ID,
       target: "main/library/item",
       menus: [
         {
-          menuType: "submenu",
-          l10nID: "zme-menu-root",
-          onShowing: (_event, context) => {
-            const items = context.items || [];
-            context.setVisible(items.length === 1 && items[0].isRegularItem());
+          menuType: "menuitem",
+          l10nID: "zme-menu-combined",
+          onShowing: itemVisible,
+          onCommand: (_event, context) => {
+            const item = itemFromContext(context);
+            if (item) void enrichItem(item, "combined");
           },
-          menus: [
-            {
-              menuType: "menuitem",
-              l10nID: "zme-menu-pdf",
-              onCommand: () => void enrichSelectedItem("pdf"),
-            },
-            {
-              menuType: "menuitem",
-              l10nID: "zme-menu-online",
-              onCommand: () => void enrichSelectedItem("online"),
-            },
-            {
-              menuType: "menuitem",
-              l10nID: "zme-menu-copy-bibtex",
-              onCommand: () => void copySelectedBibTeX(),
-            },
-          ],
+        },
+        {
+          menuType: "menuitem",
+          l10nID: "zme-menu-pdf",
+          onShowing: itemVisible,
+          onCommand: (_event, context) => {
+            const item = itemFromContext(context);
+            if (item) void enrichItem(item, "pdf");
+          },
+        },
+        {
+          menuType: "menuitem",
+          l10nID: "zme-menu-online",
+          onShowing: itemVisible,
+          onCommand: (_event, context) => {
+            const item = itemFromContext(context);
+            if (item) void enrichItem(item, "online");
+          },
+        },
+        {
+          menuType: "menuitem",
+          l10nID: "zme-menu-copy-bibtex",
+          onShowing: itemVisible,
+          onCommand: (_event, context) => {
+            const item = itemFromContext(context);
+            if (item) void copyBibTeX(item);
+          },
         },
       ],
     });
+
+    const collectionFromContext = (context) => {
+      const rows = Array.isArray(context?.collectionTreeRows)
+        ? context.collectionTreeRows
+        : [];
+      if (rows.length !== 1 || rows[0]?.type !== "collection") {
+        return null;
+      }
+      return rows[0].ref || null;
+    };
+
+    const collectionVisible = (_event, context) => {
+      context.setVisible(Boolean(collectionFromContext(context)));
+    };
 
     const collectionMenuID = Zotero.MenuManager.registerMenu({
       menuID: "zme-collection-menu",
@@ -102,23 +166,31 @@ var ZME = (() => {
       target: "main/library/collection",
       menus: [
         {
-          menuType: "submenu",
-          l10nID: "zme-menu-root",
-          onShowing: (_event, context) => {
-            context.setVisible(Boolean(getSelectedCollection()));
+          menuType: "menuitem",
+          l10nID: "zme-menu-collection-combined",
+          onShowing: collectionVisible,
+          onCommand: (_event, context) => {
+            const collection = collectionFromContext(context);
+            if (collection) void enrichCollection(collection, "combined");
           },
-          menus: [
-            {
-              menuType: "menuitem",
-              l10nID: "zme-menu-collection-pdf",
-              onCommand: () => void enrichSelectedCollection("pdf"),
-            },
-            {
-              menuType: "menuitem",
-              l10nID: "zme-menu-collection-online",
-              onCommand: () => void enrichSelectedCollection("online"),
-            },
-          ],
+        },
+        {
+          menuType: "menuitem",
+          l10nID: "zme-menu-collection-pdf",
+          onShowing: collectionVisible,
+          onCommand: (_event, context) => {
+            const collection = collectionFromContext(context);
+            if (collection) void enrichCollection(collection, "pdf");
+          },
+        },
+        {
+          menuType: "menuitem",
+          l10nID: "zme-menu-collection-online",
+          onShowing: collectionVisible,
+          onCommand: (_event, context) => {
+            const collection = collectionFromContext(context);
+            if (collection) void enrichCollection(collection, "online");
+          },
         },
       ],
     });
@@ -135,7 +207,7 @@ var ZME = (() => {
         icon: state.rootURI + "icons/zme-16.svg",
       },
       sidenav: {
-        l10nID: "zme-pane-header",
+        l10nID: "zme-pane-sidenav",
         icon: state.rootURI + "icons/zme-20.svg",
       },
       onRender: ({ body, item }) => {
@@ -152,39 +224,82 @@ var ZME = (() => {
         const container = doc.createElement("div");
         container.style.display = "grid";
         container.style.gridTemplateColumns = "1fr";
-        container.style.gap = "6px";
+        container.style.gap = "8px";
         container.style.padding = "8px";
 
-        const pdfButton = createButton(doc, "Enrich from stored PDF", () => {
-          void enrichItem(item, "pdf");
-        });
-        const onlineButton = createButton(doc, "Enrich from online sources", () => {
-          void enrichItem(item, "online");
-        });
-        const bibtexButton = createButton(doc, "Copy BibTeX", () => {
-          void copyBibTeX(item);
-        });
+        const intro = doc.createElement("div");
+        intro.textContent = "Choose how to enrich this reference. Every proposed change is reviewed before Zotero is modified.";
+        intro.style.fontSize = "0.92em";
+        intro.style.opacity = "0.78";
+        intro.style.lineHeight = "1.4";
+        intro.style.marginBottom = "2px";
 
-        const note = doc.createElement("div");
-        note.textContent = "Nothing is written to the Zotero item until you approve proposed fields.";
-        note.style.fontSize = "0.9em";
-        note.style.opacity = "0.75";
-        note.style.lineHeight = "1.35";
-        note.style.marginTop = "2px";
+        const combinedControl = createActionControl(
+          doc,
+          "Enrich from PDF + online",
+          "Recommended · Apple Intelligence reads the stored PDF, then Crossref, DataCite and OpenAlex are checked for corroboration.",
+          () => void enrichItem(item, "combined"),
+          true
+        );
+        const pdfControl = createActionControl(
+          doc,
+          "Enrich from stored PDF",
+          "PDF only · Apple Intelligence · No internet lookup.",
+          () => void enrichItem(item, "pdf")
+        );
+        const onlineControl = createActionControl(
+          doc,
+          "Enrich from online sources",
+          "Crossref · DataCite · OpenAlex · Does not read the PDF.",
+          () => void enrichItem(item, "online")
+        );
 
-        container.append(pdfButton, onlineButton, bibtexButton, note);
+        const divider = doc.createElement("div");
+        divider.style.height = "1px";
+        divider.style.background = "color-mix(in srgb, currentColor 14%, transparent)";
+        divider.style.margin = "2px 0";
+
+        const bibtexControl = createActionControl(
+          doc,
+          "Copy BibTeX",
+          "Copies Zotero's own BibTeX export for this reference to the clipboard.",
+          () => void copyBibTeX(item)
+        );
+
+        container.append(intro, combinedControl, pdfControl, onlineControl, divider, bibtexControl);
         body.appendChild(container);
       },
     });
   }
 
-  function createButton(doc, label, onClick) {
+  function createActionControl(doc, title, subtitle, onClick, recommended = false) {
+    const wrapper = doc.createElement("div");
+    wrapper.style.display = "grid";
+    wrapper.style.gridTemplateColumns = "1fr";
+    wrapper.style.gap = "3px";
+    wrapper.style.minWidth = "0";
+
     const button = doc.createElement("button");
-    button.textContent = label;
-    button.style.padding = "6px 10px";
+    button.type = "button";
+    button.textContent = title;
+    button.style.width = "100%";
+    button.style.minHeight = "30px";
+    button.style.padding = "5px 10px";
     button.style.textAlign = "left";
+    button.style.fontWeight = recommended ? "650" : "600";
+    button.style.cursor = "default";
     button.addEventListener("click", onClick);
-    return button;
+
+    const description = doc.createElement("div");
+    description.textContent = subtitle;
+    description.style.fontSize = "0.82em";
+    description.style.opacity = "0.68";
+    description.style.lineHeight = "1.35";
+    description.style.padding = "0 4px 3px";
+    description.style.overflowWrap = "anywhere";
+
+    wrapper.append(button, description);
+    return wrapper;
   }
 
   function getSelectedRegularItem() {
@@ -198,7 +313,20 @@ var ZME = (() => {
 
   function getSelectedCollection() {
     const pane = Zotero.getActiveZoteroPane();
-    return pane?.getSelectedCollection() || null;
+    if (!pane) return null;
+
+    // Zotero 10 supports multi-selection in the collections tree and replaced
+    // getSelectedCollection() with getSelectedCollections(). Our batch command
+    // deliberately requires exactly one collection.
+    if (typeof pane.getSelectedCollections === "function") {
+      const collections = pane.getSelectedCollections() || [];
+      return collections.length === 1 ? collections[0] : null;
+    }
+
+    // Kept only as a defensive fallback for older development snapshots.
+    return typeof pane.getSelectedCollection === "function"
+      ? pane.getSelectedCollection()
+      : null;
   }
 
   async function enrichSelectedItem(mode) {
@@ -211,40 +339,57 @@ var ZME = (() => {
   }
 
   async function enrichItem(item, mode) {
+    const itemTitle = item.getField("title") || "Untitled item";
+    const modeInfo = enrichmentModeInfo(mode);
+    const progress = createProgress(modeInfo.preparing, itemTitle, 5);
+
     try {
+      progress.update("Reading current Zotero metadata…", 10);
       const snapshot = await snapshotItem(item);
       let pdfPath = null;
 
-      if (mode === "pdf") {
+      if (modeInfo.requiresPDF) {
+        progress.update("Locating the stored PDF attachment…", 20);
         pdfPath = await findStoredPDFPath(item);
         if (!pdfPath) {
+          progress.close();
           showAlert(
             "Metadata Enricher",
-            "This Zotero item does not have an accessible PDF attachment."
+            mode === "combined"
+              ? "This combined enrichment needs an accessible stored PDF. No PDF attachment was found for this item. Use Online enrichment instead, or attach the PDF first."
+              : "This Zotero item does not have an accessible PDF attachment."
           );
           return;
         }
       }
 
-      const endpoint = mode === "pdf" ? "/v1/pdf-enrich" : "/v1/online-enrich";
-      const response = await callHelper(endpoint, {
-        requestID: makeRequestID(),
-        item: snapshot,
-        pdfPath,
-      });
+      progress.update(modeInfo.running, mode === "online" ? 35 : 40);
+      const response = await callHelperWithProgress(
+        modeInfo.endpoint,
+        {
+          requestID: makeRequestID(),
+          item: snapshot,
+          pdfPath,
+        },
+        progress,
+        modeInfo.running
+      );
 
       const candidates = Array.isArray(response.candidates) ? response.candidates : [];
+      progress.update("Preparing metadata review…", 95);
+      progress.close();
+
       if (!candidates.length) {
         const detail = (response.notes || []).join("\n");
-        showAlert(
-          "Metadata Enricher",
-          detail || "No new metadata candidates were found."
+        showToast(
+          detail || "No useful metadata candidates were found.",
+          { duration: 6000 }
         );
         return;
       }
 
       const decision = await openReviewDialog({
-        title: mode === "pdf" ? "PDF-only metadata review" : "Online metadata review",
+        title: modeInfo.reviewTitle,
         itemTitle: snapshot.fields.title || "Untitled item",
         candidates: candidates.map((candidate) => ({
           ...candidate,
@@ -260,26 +405,84 @@ var ZME = (() => {
       const selected = candidates.filter((candidate) =>
         decision.acceptedIDs.includes(candidate.id)
       );
-      const result = await applyCandidates(item, selected);
 
-      showAlert(
-        "Metadata Enricher",
-        `Applied ${result.applied} field${result.applied === 1 ? "" : "s"}.` +
-          (result.skipped ? ` ${result.skipped} candidate(s) could not be applied.` : "")
-      );
+      const applyProgress = createProgress("Applying approved metadata…", itemTitle, 25);
+      try {
+        const result = await applyCandidates(item, selected);
+        applyProgress.update("Metadata update complete.", 100);
+        applyProgress.close();
+        showToast(
+          `Applied ${result.applied} field${result.applied === 1 ? "" : "s"}.` +
+            (result.skipped ? ` ${result.skipped} candidate(s) could not be applied.` : ""),
+          { success: result.applied > 0, duration: 4000 }
+        );
+      } catch (error) {
+        applyProgress.close();
+        throw error;
+      }
     } catch (error) {
+      progress.close();
       log(`Enrichment failed: ${error?.stack || error}`, 1);
       showAlert("Metadata Enricher", humanizeError(error));
+    }
+  }
+
+  function enrichmentModeInfo(mode) {
+    switch (mode) {
+      case "combined":
+        return {
+          endpoint: "/v1/combined-enrich",
+          requiresPDF: true,
+          preparing: "Preparing combined enrichment…",
+          running: "Reading the PDF with Apple Intelligence and checking scholarly sources…",
+          reviewTitle: "PDF + online metadata review",
+        };
+      case "pdf":
+        return {
+          endpoint: "/v1/pdf-enrich",
+          requiresPDF: true,
+          preparing: "Preparing PDF analysis…",
+          running: "Analyzing the stored PDF with Apple Intelligence…",
+          reviewTitle: "PDF-only metadata review",
+        };
+      case "online":
+        return {
+          endpoint: "/v1/online-enrich",
+          requiresPDF: false,
+          preparing: "Preparing online metadata lookup…",
+          running: "Checking Crossref, DataCite and OpenAlex…",
+          reviewTitle: "Online metadata review",
+        };
+      default:
+        throw new Error(`Unknown enrichment mode: ${mode}`);
+    }
+  }
+
+  async function callHelperWithProgress(endpoint, payload, progress, baseMessage) {
+    const mainWindow = Zotero.getMainWindow();
+    const started = Date.now();
+    const timer = mainWindow.setInterval(() => {
+      const seconds = Math.max(1, Math.round((Date.now() - started) / 1000));
+      progress.update(`${baseMessage} ${seconds}s elapsed…`);
+    }, 3000);
+
+    try {
+      return await callHelper(endpoint, payload);
+    } finally {
+      mainWindow.clearInterval(timer);
     }
   }
 
   async function enrichSelectedCollection(mode) {
     const collection = getSelectedCollection();
     if (!collection) {
-      showAlert("Metadata Enricher", "Select a Zotero collection first.");
+      showAlert("Metadata Enricher", "Select exactly one Zotero collection first.");
       return;
     }
+    await enrichCollection(collection, mode);
+  }
 
+  async function enrichCollection(collection, mode) {
     const items = collection.getChildItems().filter((item) => item.isRegularItem());
     if (!items.length) {
       showAlert("Metadata Enricher", "The selected collection contains no regular items.");
@@ -290,7 +493,7 @@ var ZME = (() => {
       Zotero.getMainWindow(),
       "Metadata Enricher",
       `Process ${items.length} item(s) in “${collection.name}”?\n\n` +
-        "Version 0.1.0 deliberately reviews each item before writing changes. " +
+        `Version ${state.version} deliberately reviews each item before writing changes. ` +
         "This is slower, but prevents silent corruption of a collection."
     );
     if (!ok) return;
@@ -389,29 +592,133 @@ var ZME = (() => {
 
   async function callHelper(endpoint, payload) {
     const token = await readHelperToken();
+    const timeout = endpoint === "/v1/online-enrich" ? REQUEST_TIMEOUT_MS : 300000;
 
-    let xhr;
+    const perform = () => Zotero.HTTP.request("POST", HELPER_BASE + endpoint, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-ZME-Token": token,
+      },
+      body: JSON.stringify(payload),
+      responseType: "json",
+      timeout,
+    });
+
     try {
-      xhr = await Zotero.HTTP.request("POST", HELPER_BASE + endpoint, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-ZME-Token": token,
-        },
-        body: JSON.stringify(payload),
-        responseType: "json",
-        timeout: REQUEST_TIMEOUT_MS,
-      });
+      const xhr = await perform();
+      return validateHelperResponse(xhr);
     } catch (error) {
-      throw new Error(
-        "The local Metadata Helper could not be reached. Start “Zotero Metadata Helper” from ~/Applications and try again."
-      );
-    }
+      const responseMessage = helperResponseErrorMessage(error);
+      if (responseMessage) {
+        throw new Error(responseMessage);
+      }
 
+      // Distinguish a dead helper from an application-level request failure.
+      // Previous versions incorrectly reported every non-2xx PDF response as
+      // "helper could not be reached", hiding the actual PDF/permission error.
+      let healthy = await helperIsHealthy();
+      if (!healthy) {
+        const launched = launchInstalledHelper();
+        if (launched) {
+          healthy = await waitForHelper(7000);
+          if (healthy) {
+            try {
+              const xhr = await perform();
+              return validateHelperResponse(xhr);
+            } catch (retryError) {
+              const retryMessage = helperResponseErrorMessage(retryError);
+              if (retryMessage) throw new Error(retryMessage);
+              error = retryError;
+            }
+          }
+        }
+      }
+
+      if (!healthy) {
+        throw new Error(
+          "The local Metadata Helper is not running. Metadata Enricher tried to start it automatically but could not reach it. Open “Zotero Metadata Helper” in ~/Applications and try again."
+        );
+      }
+
+      const message = String(error?.message || error || "Unknown request error");
+      if (/timed out|timeout/i.test(message)) {
+        throw new Error(
+          "The Metadata Helper is running, but this enrichment request timed out. The PDF may be unusually large or Apple Intelligence may still be processing it. Try again; if it repeats, run scripts/diagnose-helper.sh."
+        );
+      }
+
+      throw new Error(`The Metadata Helper is running, but the enrichment request failed: ${message}`);
+    }
+  }
+
+  function validateHelperResponse(xhr) {
     if (xhr.status < 200 || xhr.status >= 300) {
-      const message = xhr.response?.error || `Helper returned HTTP ${xhr.status}`;
+      const message = xhr.response?.error || `Metadata Helper returned HTTP ${xhr.status}.`;
       throw new Error(message);
     }
+    if (xhr.response?.error) {
+      throw new Error(xhr.response.error);
+    }
     return xhr.response;
+  }
+
+  function helperResponseErrorMessage(error) {
+    const xhr = error?.xmlhttp || error?.xhr || error?.response || null;
+    const status = Number(xhr?.status || error?.status || 0);
+    const raw = xhr?.response ?? xhr?.responseText ?? error?.responseText ?? null;
+
+    if (raw && typeof raw === "object" && typeof raw.error === "string") {
+      return raw.error;
+    }
+
+    if (typeof raw === "string" && raw.trim()) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed.error === "string") return parsed.error;
+      } catch (_) {
+        if (status >= 400) return raw.trim();
+      }
+    }
+
+    if (status >= 400) {
+      return `Metadata Helper rejected the request (HTTP ${status}).`;
+    }
+    return null;
+  }
+
+  async function helperIsHealthy() {
+    try {
+      const xhr = await Zotero.HTTP.request("GET", HELPER_BASE + "/health", {
+        responseType: "json",
+        timeout: 2000,
+      });
+      return xhr.status === 200 && xhr.response?.service === "Zotero Metadata Helper";
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function launchInstalledHelper() {
+    try {
+      const home = Services.dirsvc.get("Home", Components.interfaces.nsIFile).clone();
+      home.append("Applications");
+      home.append("Zotero Metadata Helper.app");
+      if (!home.exists()) return false;
+      home.launch();
+      return true;
+    } catch (error) {
+      log(`Could not auto-launch helper: ${error?.stack || error}`, 2);
+      return false;
+    }
+  }
+
+  async function waitForHelper(timeoutMS) {
+    const started = Date.now();
+    while (Date.now() - started < timeoutMS) {
+      if (await helperIsHealthy()) return true;
+      await new Promise((resolve) => Zotero.getMainWindow().setTimeout(resolve, 350));
+    }
+    return false;
   }
 
   async function readHelperToken() {
@@ -517,28 +824,50 @@ var ZME = (() => {
   }
 
   async function copyBibTeX(item) {
+    const progress = createProgress(
+      "Generating BibTeX with Zotero's built-in translator…",
+      item.getField("title") || "Untitled item",
+      20
+    );
+
     try {
       const translation = new Zotero.Translate.Export();
       translation.setItems([item]);
-      const translators = translation.getTranslators();
-      const bibTeX = translators.find((translator) => translator.label === "BibTeX");
-      if (!bibTeX) {
-        throw new Error("Zotero's built-in BibTeX translator was not found.");
-      }
+      // Use Zotero's stable built-in BibTeX translator UUID directly. This avoids
+      // translator discovery races and locale-dependent label matching.
+      translation.setTranslator(BIBTEX_TRANSLATOR_ID);
 
-      translation.setTranslator(bibTeX);
       const output = await new Promise((resolve, reject) => {
-        translation.setHandler("done", (obj, success) => {
-          if (!success) {
-            reject(new Error("BibTeX export failed."));
+        let settled = false;
+        const resolveOnce = (value) => {
+          if (settled) return;
+          settled = true;
+          resolve(value);
+        };
+        const rejectOnce = (error) => {
+          if (settled) return;
+          settled = true;
+          reject(error instanceof Error ? error : new Error(String(error || "BibTeX export failed.")));
+        };
+
+        translation.setHandler("done", (obj, worked) => {
+          if (!worked) {
+            rejectOnce(new Error("Zotero's BibTeX translator reported an export failure."));
             return;
           }
-          resolve(obj.string || "");
+          resolveOnce(obj?.string || "");
         });
+        translation.setHandler("error", (_obj, error) => {
+          rejectOnce(error || new Error("BibTeX export failed."));
+        });
+
         try {
-          translation.translate();
+          const maybePromise = translation.translate();
+          if (maybePromise?.catch) {
+            maybePromise.catch(rejectOnce);
+          }
         } catch (error) {
-          reject(error);
+          rejectOnce(error);
         }
       });
 
@@ -546,11 +875,15 @@ var ZME = (() => {
         throw new Error("Zotero produced an empty BibTeX export.");
       }
 
-      const clipboard = Components.classes["@mozilla.org/widget/clipboardhelper;1"].getService(
-        Components.interfaces.nsIClipboardHelper
-      );
-      clipboard.copyString(output);
+      Components.classes["@mozilla.org/widget/clipboardhelper;1"]
+        .getService(Components.interfaces.nsIClipboardHelper)
+        .copyString(output.replace(/\r\n/g, "\n"));
+
+      progress.update("BibTeX copied to the clipboard.", 100);
+      progress.close();
+      showToast("BibTeX copied to the clipboard.", { success: true, duration: 2500 });
     } catch (error) {
+      progress.close();
       log(`Copy BibTeX failed: ${error?.stack || error}`, 1);
       showAlert("Metadata Enricher", `Could not copy BibTeX.\n\n${error.message || error}`);
     }
@@ -561,14 +894,46 @@ var ZME = (() => {
     const io = {
       data: reviewData,
       result: null,
+      ready: false,
+      error: null,
     };
 
     const dialog = mainWindow.openDialog(
-      state.rootURI + "chrome/content/review.xhtml",
-      "zme-review",
-      "chrome,centerscreen,resizable,width=1150,height=650",
+      REVIEW_DIALOG_URL,
+      `_blank`,
+      "chrome,centerscreen,resizable,dialog=no,width=1180,height=700",
       io
     );
+
+    // Fail fast instead of leaving the user staring at an empty window if a
+    // future Zotero update breaks review-dialog loading.
+    const ready = await new Promise((resolve) => {
+      const started = Date.now();
+      const timer = mainWindow.setInterval(() => {
+        if (dialog.closed) {
+          mainWindow.clearInterval(timer);
+          resolve(Boolean(io.ready));
+          return;
+        }
+        if (io.ready) {
+          mainWindow.clearInterval(timer);
+          resolve(true);
+          return;
+        }
+        if (Date.now() - started > 5000) {
+          mainWindow.clearInterval(timer);
+          try { dialog.close(); } catch (_) {}
+          resolve(false);
+        }
+      }, 100);
+    });
+
+    if (!ready) {
+      throw new Error(
+        io.error ||
+          "The metadata review window failed to initialize. Open Tools → Developer → Error Console and retry."
+      );
+    }
 
     await new Promise((resolve) => {
       const timer = mainWindow.setInterval(() => {
@@ -579,11 +944,74 @@ var ZME = (() => {
       }, 100);
     });
 
+    if (io.error) {
+      throw new Error(io.error);
+    }
     return io.result;
   }
 
   function makeRequestID() {
     return `zme-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  }
+
+  function createProgress(message, detail = "", initialProgress = 0) {
+    // Progress feedback is UX, not a dependency of the enrichment engine. If a
+    // future Zotero build changes ProgressWindow, log it and keep the actual
+    // metadata operation running rather than failing because the spinner failed.
+    try {
+      const win = new Zotero.ProgressWindow({ closeOnClick: false });
+      win.changeHeadline("Metadata Enricher");
+      if (detail) {
+        const shortDetail = detail.length > 90 ? `${detail.slice(0, 87)}…` : detail;
+        win.addDescription(shortDetail);
+      }
+
+      const itemProgress = new win.ItemProgress();
+      itemProgress.setText(message);
+      if (typeof itemProgress.setProgress === "function") {
+        itemProgress.setProgress(initialProgress);
+      }
+      win.show();
+
+      let closed = false;
+      return {
+        update(text, percent = null) {
+          if (closed) return;
+          itemProgress.setText(text);
+          if (Number.isFinite(percent) && typeof itemProgress.setProgress === "function") {
+            itemProgress.setProgress(Math.max(0, Math.min(100, percent)));
+          }
+        },
+        close() {
+          if (closed) return;
+          closed = true;
+          try {
+            win.startCloseTimer(100);
+          } catch (_) {
+            // Progress feedback must never break the actual operation.
+          }
+        },
+      };
+    } catch (error) {
+      log(`Progress UI unavailable: ${error?.stack || error}`, 2);
+      return {
+        update() {},
+        close() {},
+      };
+    }
+  }
+
+  function showToast(message, { success = false, duration = 3000 } = {}) {
+    try {
+      const win = new Zotero.ProgressWindow({ closeOnClick: true });
+      win.changeHeadline(success ? "Metadata Enricher — Done" : "Metadata Enricher");
+      win.addDescription(message);
+      win.show();
+      win.startCloseTimer(duration);
+    } catch (error) {
+      // Notifications are secondary; log failures instead of interrupting users.
+      log(`Could not show notification: ${error}`, 2);
+    }
   }
 
   function showAlert(title, message) {

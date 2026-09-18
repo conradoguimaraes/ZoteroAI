@@ -78,7 +78,7 @@ enum AppleIntelligenceAnalyzer {
             let name = field.field.zmeTrimmed
             let value = field.value.zmeCollapsedWhitespace
             guard allowedFields.contains(name), !value.isEmpty else { continue }
-            guard isMeaningfullyDifferent(field: name, candidateValue: value, item: item) else { continue }
+            guard shouldProposeCandidate(field: name, candidateValue: value, item: item) else { continue }
 
             candidates.append(
                 MetadataCandidate(
@@ -100,7 +100,7 @@ enum AppleIntelligenceAnalyzer {
 
         if !authors.isEmpty {
             let display = authors.map { [$0.firstName, $0.lastName].filter { !$0.isEmpty }.joined(separator: " ") }.joined(separator: "; ")
-            if isMeaningfullyDifferent(field: "creators", candidateValue: display, item: item) {
+            if shouldProposeCandidate(field: "creators", candidateValue: display, item: item) {
                 candidates.append(
                     MetadataCandidate(
                         id: candidateID(),
@@ -122,7 +122,7 @@ enum AppleIntelligenceAnalyzer {
 
         if !keywords.isEmpty {
             let display = keywords.joined(separator: "; ")
-            if isMeaningfullyDifferent(field: "tags", candidateValue: display, item: item) {
+            if shouldProposeCandidate(field: "tags", candidateValue: display, item: item) {
                 candidates.append(
                     MetadataCandidate(
                         id: candidateID(),

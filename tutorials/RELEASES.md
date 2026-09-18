@@ -2,7 +2,7 @@
 
 The project uses:
 
-- `VERSION` — semantic version, e.g. `0.1.0`;
+- `VERSION` — semantic version, e.g. `0.2.0`;
 - `BUILD` — monotonically increasing integer, e.g. `1`;
 - `CHANGELOG.md` — human-readable release history.
 

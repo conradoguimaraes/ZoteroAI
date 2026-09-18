@@ -7,43 +7,62 @@
 </head>
 <body>
   <main>
-    <header>
-      <div>
+    <header class="dialog-header">
+      <div class="title-block">
         <h1 id="dialog-title">Metadata review</h1>
         <p id="item-title"></p>
       </div>
       <div class="header-actions">
-        <button id="select-safe">Select safe missing fields</button>
-        <button id="clear-all">Clear selection</button>
+        <button id="select-safe" type="button">Select safe missing fields</button>
+        <button id="clear-all" type="button">Clear selection</button>
       </div>
     </header>
 
-    <section id="notes" class="notes" hidden="hidden"></section>
+    <section class="guidance">
+      <strong>Review before applying.</strong>
+      Existing Zotero values are never selected for replacement automatically. PDF-derived AI values are shown as proposals, not facts.
+    </section>
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="apply-col">Apply</th>
-            <th>Field</th>
-            <th>Current</th>
-            <th>Proposed</th>
-            <th>Source</th>
-            <th>Status</th>
-            <th>Evidence</th>
-          </tr>
-        </thead>
-        <tbody id="candidate-body"></tbody>
-      </table>
-    </div>
+    <section id="initializing" class="initializing">
+      Preparing metadata review…
+    </section>
 
-    <footer>
-      <span id="selection-count">0 selected</span>
-      <div class="footer-actions">
-        <button id="cancel">Cancel</button>
-        <button id="apply" class="primary">Apply selected</button>
+    <section id="fatal-error" class="fatal-error" hidden="hidden">
+      <strong>The review window could not initialize.</strong>
+      <span id="fatal-error-text"></span>
+    </section>
+
+    <details id="notes-wrap" class="notes-wrap" hidden="hidden">
+      <summary>Source notes</summary>
+      <div id="notes" class="notes"></div>
+    </details>
+
+    <div id="review-content" class="review-content" hidden="hidden">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="apply-col">Apply</th>
+              <th>Field</th>
+              <th>Current</th>
+              <th>Proposed</th>
+              <th>Source</th>
+              <th>Status</th>
+              <th>Evidence</th>
+            </tr>
+          </thead>
+          <tbody id="candidate-body"></tbody>
+        </table>
       </div>
-    </footer>
+
+      <footer>
+        <span id="selection-count">0 selected</span>
+        <div class="footer-actions">
+          <button id="cancel" type="button">Cancel</button>
+          <button id="apply" type="button" class="primary">Apply selected</button>
+        </div>
+      </footer>
+    </div>
   </main>
   <script src="review.js"></script>
 </body>

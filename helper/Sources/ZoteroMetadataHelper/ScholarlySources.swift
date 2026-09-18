@@ -325,7 +325,8 @@ struct ScholarlySources {
     }
 
     private func assign(_ fields: inout [String: String], _ key: String, _ raw: String?) {
-        guard let value = raw?.zmeCollapsedWhitespace, !value.isEmpty else { return }
+        guard let value = raw?.zmeCollapsedWhitespace,
+              isUsefulMetadataValue(field: key, value: value) else { return }
         fields[key] = value
     }
 

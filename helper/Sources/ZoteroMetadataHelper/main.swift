@@ -1,8 +1,8 @@
 import Foundation
 
 struct BuildInfo {
-    static let version = "0.1.0"
-    static let build = 1
+    static let version = "0.2.5"
+    static let build = 7
 }
 
 #if os(macOS)

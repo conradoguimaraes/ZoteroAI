@@ -1,0 +1,674 @@
+[
+  {
+    "isFramework" : true,
+    "moduleName" : "Accessibility",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/Accessibility.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "AppKit",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/AppKit.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "ColorSync",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/ColorSync.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "Combine",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/Combine.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreData",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/CoreData.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "CoreFoundation",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/CoreFoundation.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreGraphics",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/CoreGraphics.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "CoreImage",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/CoreImage.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreText",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/CoreText.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreTransferable",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/CoreTransferable.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreVideo",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/CoreVideo.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Darwin",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/Darwin.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "DataDetection",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/DataDetection.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "DeveloperToolsSupport",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/DeveloperToolsSupport.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Dispatch",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/Dispatch.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Distributed",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/Distributed.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "Foundation",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/Foundation.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "FoundationModels",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/FoundationModels.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "IOKit",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/IOKit.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "ImageIO",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/ImageIO.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Metal",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/Metal.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "Network",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/Network.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "OSLog",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/OSLog.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "ObjectiveC",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/ObjectiveC.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Observation",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/Observation.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "PDFKit",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/PDFKit.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "QuartzCore",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/QuartzCore.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Spatial",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/Spatial.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Swift",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/Swift.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "SwiftUICore",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/SwiftUICore.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "Symbols",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/Symbols.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "System",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/System.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "UniformTypeIdentifiers",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/UniformTypeIdentifiers.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "XPC",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/XPC.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_Builtin_float",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/_Builtin_float.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_Concurrency",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/_Concurrency.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation1",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/_DarwinFoundation1.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation2",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/_DarwinFoundation2.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation3",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/_DarwinFoundation3.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_StringProcessing",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/_StringProcessing.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "os",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/os.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "simd",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/27.0\/simd.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Accessibility.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/Accessibility-DT8NZXXPREQLS1OC3FQLTACC0.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Accessibility"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/AppKit.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/AppKit-CP9YBU7K9TEO0YAXRE6NALTY8.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "AppKit"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/ApplicationServices.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/ApplicationServices-8AGRU1AAT0ZEVU64UZW4IVR8P.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ApplicationServices"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CFNetwork.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/CFNetwork-3O6FGOC2G3H0EHUCU13AGIIB0.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CFNetwork"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/cups.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/CUPS-1XZ3IRR8DLKWJZH8QBGBNR7JB.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CUPS"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Cocoa.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/Cocoa-IZ6TQHSN8OHF0GC8FD2SER79.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Cocoa"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/ColorSync.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/ColorSync-3XAI76FHXCQVRF31CAUUPTOOU.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ColorSync"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreData.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/CoreData-STIHTQ2EB37B0YG161ZERCO6.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreData"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreFoundation.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/CoreFoundation-5557KFR4OJUF8YT0YMP9M9NER.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreFoundation"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreGraphics.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/CoreGraphics-2HUOZWZM3FBRBJ5OBPA696B1F.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreGraphics"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreImage.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/CoreImage-4Y2BBPTN20Q2PAP3NOROC9RHI.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreImage"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreServices.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/CoreServices-C002OJSZS96NDI9HBOP69Y3HP.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreServices"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreText.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/CoreText-4JQ2Y9EQ81UC9LMMN84O77887.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreText"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreTransferable.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/CoreTransferable-DYRGC5KUVM8JDLS80O65QBLGP.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreTransferable"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreVideo.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/CoreVideo-D330H7CGAT41NM30SD4GHHWVZ.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreVideo"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/Darwin.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/Darwin-61LKI09SM576KZ5BVPTL9ZPYV.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Darwin"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/DataDetection.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/DataDetection-4KR5YLV6IR7UXYVDA8R71ATN1.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "DataDetection"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/DeveloperToolsSupport.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/DeveloperToolsSupport-46I2QD8QKH7RA2ZJOANVHTE90.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "DeveloperToolsSupport"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/DiskArbitration.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/DiskArbitration-7M0YAU0I8BFLI680UIXM69CTP.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "DiskArbitration"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/dispatch.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/Dispatch-7QC1EQ42NAO56ISV3EUS9FO9M.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Dispatch"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Foundation.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/Foundation-9KO8L20CQN76W0PLW1TR7GUP6.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Foundation"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/IOKit.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/IOKit-37N9GVFMCT6TLF8YVI03BI1R3.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "IOKit"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/IOSurface.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/IOSurface-D55AND11VLQRUAWTMI72N3MGY.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "IOSurface"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/ImageIO.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/ImageIO-8CO40MAH5GE7FCHH93M8W0LVB.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ImageIO"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinBasic.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/MachO-8UOFEN5JEDFNWQP5305Z5NKRD.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "MachO"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Metal.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/Metal-U6RHJZC6IWKCLOG5WBYFLO4B.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Metal"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Network.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/Network-4Z1H2ZRXGNWL07IL0HAV3X6E2.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Network"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/OSLog.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/OSLog-D9I63MIIHE1TNQ5C6UDM1ITPM.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "OSLog"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/ObjectiveC.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/ObjectiveC-17VO8ESVQL1046ZMKE8JATMQG.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ObjectiveC"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/OpenGL.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/OpenGL-3NR1GBH10VYRLUZ8MDD78D92K.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "OpenGL"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/PDFKit.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/PDFKit-82NIOUOLKAMLM93D8BGQEISSB.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "PDFKit"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/QuartzCore.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/QuartzCore-4LDRFAQ0O4WLWDIFITOPQJZY8.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "QuartzCore"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Security.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/Security-AKXKRISX9XD283KTZ77BUHMZ4.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Security"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/Spatial\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/Spatial-DGSQTI4ZWLKZ7VPD9AT5HVPY8.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Spatial"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/lib\/swift\/shims\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/SwiftShims-EWZ26SH71LBDNG3I6CQA7EPC4.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "SwiftShims"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/SwiftUICore.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/SwiftUICore-ENP4UDO3BUZM2KAG3IU3AAET3.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "SwiftUICore"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Symbols.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/Symbols-4JW94XYYY0N82XDCUCFQCLDG4.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Symbols"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/UniformTypeIdentifiers.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/UniformTypeIdentifiers-2IZJGNNYN5S6EV645L3ABDOG4.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "UniformTypeIdentifiers"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/xpc.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/XPC-57LSXPCVHQNIQDG0GAY8BL8EY.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "XPC"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation1.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_AvailabilityInternal-9GREHWEJKW5GHBM47421FGSJS.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_AvailabilityInternal"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_Builtin_float-32G2FWNH18KE68AYKHTSZM31B.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_float"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_Builtin_intrinsics-5V04ZNNTGWKOYHD76BYCZ3DTQ.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_intrinsics"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_Builtin_inttypes-TIKV46YS9YP5061A2I13756D.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_inttypes"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_Builtin_limits-EGQV6LFOYWUW05U2NFZKDCTZ2.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_limits"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_Builtin_stdarg-BBJ90P1Q04UZNVI9MGC1SHFMR.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stdarg"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_Builtin_stdatomic-5EAVQ9M0YNTCKFN8BZP9F4AD2.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stdatomic"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_Builtin_stdbool-DBH6WN0Q0Q53YKFZ2RB27LQNF.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stdbool"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_Builtin_stddef-D0VFD82AYDRXAUJYZ05GU691W.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stddef"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_Builtin_stdint-1QQB45KZ3UCXP5I458I5KCGR8.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stdint"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_Builtin_tgmath-DTUSVFU42VM8JRGQZ0O1355YN.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_tgmath"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation1.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_DarwinFoundation1-EVGY62CTSRY2VZDOBADJ1N82G.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation1"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation2.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_DarwinFoundation2-481A5IC6FMRALGR6NE52S66YC.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation2"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation3.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_DarwinFoundation3-9M7QN34SLQY4PZZCRL8QOT3ME.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation3"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/lib\/swift\/shims\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/_SwiftConcurrencyShims-BBMZDG2FCN03RWER2E3ABT9CA.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_SwiftConcurrencyShims"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/dnssd.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/dnssd-9ESZ7VUMFPEM9A7DBKOKIXS6A.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "dnssd"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/launch.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/launch-A2WPKHNLBUBLQZRIOKBCOQPLB.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "launch"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/libDER\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/libDER-7E3KU7CNRNBL3QTFGAKA06QI9.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "libDER"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/libkern.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/libkern-795N7B5JO87GE13YC24NS0S3X.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "libkern"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/os.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/os-B1LHMZ7CDOT4CPRHH9P1V3HCI.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "os"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/os.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/os_object-AZV1D1H4Z3KXJ7I6CVCW9EP4Z.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "os_object"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/os.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/os_workgroup-5BYLOMNW7RFMD57UYTLRU92LA.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "os_workgroup"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/ptrauth-31T6IDZ3S2MEDBDK3WK0ZHW6S.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ptrauth"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/ptrcheck-3BTCVMEJGCKUQGYWNX0EWJFI.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ptrcheck"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/simd\/module.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/simd-7BAUHJ7LY4QVPKPHWJWD7OW07.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "simd"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/c_standard_library.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/string_h-5HWGB0BKWV2QXFU4E0M6HECUF.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "string_h"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation2.modulemap",
+    "clangModulePath" : "\/Users\/conrado\/Documents\/Github\/ZoteroAI\/helper\/.build\/out\/SDKExplicitPrecompiledModules\/sys_types-E5QNYMQ2FOKGVU05PRLBT08C6.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "sys_types"
+  }
+]
